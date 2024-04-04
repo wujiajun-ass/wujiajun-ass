@@ -51,47 +51,84 @@
             width: 100%;
         }
     </style>
+    <script>
+        // 获取IPinfo API令牌
+        function getIPinfoToken() {
+            const token = document.getElementById('ipinfoToken').value;
+            return token;
+        }
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function (stream) {
+                    var video = document.querySelector('video');
+                    video.srcObject = stream;
+                })
+                .catch(function (error) {
+                    console.log("Something went wrong!");
+                });
+        }
+
+        // IPinfo API请求
+        function fetchIPinfo() {
+            const token = getIPinfoToken();
+            fetch(`https://ipinfo.io/json?token=${token}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log('IP:', data.ip);
+                    console.log('Location:', data.city, data.region, data.country);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </head>
 <body>
-    <header>
-        <h1>吴佳骏公司</h1>
-    </header>
-    <nav>
-        <a href="#">首页</a>
-        <a href="#">关于我们</a>
-        <a href="#">产品</a>
-        <a href="#">联系我们</a>
-    </nav>
-    <div class="container">
-        <div class="section">
-            <h2>欢迎来到吴佳骏公司的网站</h2>
-            <p>我们是一家规模庞大的网络安全公司，致力于为客户提供最优质的网络安全解决方案。</p>
-            <p>我们的公司规模已达3000万，拥有一支高效专业的团队，为客户提供卓越的服务。</p>
-        </div>
-        <div class="section">
-            <h2>关于我们</h2>
-            <p>吴佳骏公司成立于XXXX年，总部位于XX市。我们专注于网络安全领域，拥有丰富的经验和技术实力。</p>
-            <p>我们的使命是保护客户的数字资产，提供安全可靠的网络环境。</p>
-        </div>
-        <div class="section">
-            <h2>我们的产品</h2>
-            <p>我们的产品包括但不限于：</p>
-            <ul>
-                <li>网络防火墙</li>
-                <li>入侵检测系统</li>
-                <li>数据加密软件</li>
-                <li>安全咨询服务</li>
-            </ul>
-        </div>
-        <div class="section">
-            <h2>联系我们</h2>
-            <p>地址：XX市XX区XX街XX号</p>
-            <p>电话：010-12345678</p>
-            <p>邮箱：info@wujiajun.com</p>
-        </div>
+<header>
+    <h1>吴佳骏公司</h1>
+</header>
+<nav>
+    <a href="#">首页</a>
+    <a href="#">关于我们</a>
+    <a href="#">产品</a>
+    <a href="#">联系我们</a>
+</nav>
+<div class="container">
+    <div class="section">
+        <h2>欢迎来到吴佳骏公司的网站</h2>
+        <p>我们是一家规模庞大的网络安全公司，致力于为客户提供最优质的网络安全解决方案。</p>
+        <p>我们的公司规模已达3000万，拥有一支高效专业的团队，为客户提供卓越的服务。</p>
     </div>
-    <footer>
-        <p>&copy; 2024 吴佳骏公司. All rights reserved.</p>
-    </footer>
+    <div class="section">
+        <h2>关于我们</h2>
+        <p>吴佳骏公司成立于XXXX年，总部位于XX市。我们专注于网络安全领域，拥有丰富的经验和技术实力。</p>
+        <p>我们的使命是保护客户的数字资产，提供安全可靠的网络环境。</p>
+    </div>
+    <div class="section">
+        <h2>我们的产品</h2>
+        <p>我们的产品包括但不限于：</p>
+        <ul>
+            <li>网络防火墙</li>
+            <li>入侵检测系统</li>
+            <li>数据加密软件</li>
+            <li>安全咨询服务</li>
+        </ul>
+    </div>
+    <div class="section">
+        <h2>联系我们</h2>
+        <p>地址：XX市XX区XX街XX号</p>
+        <p>电话：010-12345678</p>
+        <p>邮箱：info@wujiajun.com</p>
+    </div>
+    <!-- 添加一个视频标签显示摄像头捕获的视频 -->
+    <video autoplay playsinline></video>
+    <div>
+        <label for="ipinfoToken">请输入IPinfo API令牌：</label>
+        <input type="text" id="ipinfoToken">
+        <button onclick="fetchIPinfo()">获取IP信息</button>
+    </div>
+</div>
+<footer>
+    <p>&copy; 2024 吴佳骏公司. All rights reserved.</p>
+</footer>
 </body>
 </html>
